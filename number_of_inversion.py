@@ -9,7 +9,7 @@ def inversions_naive(a):
     return number_of_inversions
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     input_n = int(input())
     elements = list(map(int, input().split()))
     assert len(elements) == input_n
