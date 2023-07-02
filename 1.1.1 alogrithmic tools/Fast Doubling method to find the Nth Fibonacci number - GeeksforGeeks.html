@@ -1,0 +1,137 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE html>
+<html platform="linux" dir="ltr" lang="en-US"><head>
+  <title id="reader-title">Fast Doubling method to find the Nth Fibonacci number - GeeksforGeeks</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src chrome:; img-src data: *; media-src *; object-src 'none'">
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="viewport" content="width=device-width; user-scalable=0">
+  <link rel="stylesheet" href="chrome://global/skin/aboutReader.css" type="text/css">
+  <link rel="stylesheet" href="chrome://global/skin/aboutReaderPocket.css" type="text/css">
+  <link rel="localization" href="toolkit/about/aboutReader.ftl">
+  <link rel="localization" href="browser/branding/brandings.ftl">
+<link rel="stylesheet" href="chrome://global/skin/narrate.css"><link rel="shortcut icon" href="https://www.geeksforgeeks.org/favicon.ico"></head>
+
+<body class="light sans-serif loaded" style="--font-size: 20px; --content-width: 30em;">
+  <div class="top-anchor"></div>
+
+  <div id="toolbar" class="toolbar-container">
+    <div class="toolbar reader-toolbar">
+      <div class="reader-controls" articledir="ltr">
+        <button class="close-button toolbar-button" aria-labelledby="toolbar-close" data-telemetry-id="reader-close">
+          <span class="hover-label" id="toolbar-close" data-l10n-id="about-reader-toolbar-close">Close Reader View</span>
+        </button>
+        <ul class="dropdown style-dropdown">
+          <li>
+            <button class="dropdown-toggle toolbar-button style-button" aria-labelledby="toolbar-type-controls" data-telemetry-id="reader-type-controls">
+              <span class="hover-label" id="toolbar-type-controls" data-l10n-id="about-reader-toolbar-type-controls">Type controls</span>
+            </button>
+          </li>
+          <li class="dropdown-popup">
+            <div class="dropdown-arrow"></div>
+            <div class="font-type-buttons radiorow"><input id="radio-itemsans-serif-button" type="radio" class="radio-button" name="font-type" checked="checked"><label for="radio-itemsans-serif-button" class="sans-serif-button" data-l10n-id="about-reader-font-type-sans-serif" checked="true">Sans-serif</label><input id="radio-itemserif-button" type="radio" class="radio-button" name="font-type"><label for="radio-itemserif-button" class="serif-button" data-l10n-id="about-reader-font-type-serif">Serif</label></div>
+            <div class="font-size-buttons buttonrow">
+              <button class="minus-button" data-l10n-id="about-reader-toolbar-minus" title="Decrease Font Size"></button>
+              <span class="font-size-value">5</span>
+              <button class="plus-button" data-l10n-id="about-reader-toolbar-plus" title="Increase Font Size"></button>
+            </div>
+            <div class="content-width-buttons buttonrow">
+               <button class="content-width-minus-button" data-l10n-id="about-reader-toolbar-contentwidthminus" title="Decrease Content Width"></button>
+               <span class="content-width-value">3</span>
+               <button class="content-width-plus-button" data-l10n-id="about-reader-toolbar-contentwidthplus" title="Increase Content Width"></button>
+            </div>
+            <div class="line-height-buttons buttonrow">
+                <button class="line-height-minus-button" data-l10n-id="about-reader-toolbar-lineheightminus" title="Decrease Line Height"></button>
+                <span class="line-height-value">4</span>
+                <button class="line-height-plus-button" data-l10n-id="about-reader-toolbar-lineheightplus" title="Increase Line Height"></button>
+            </div>
+            <div class="color-scheme-buttons radiorow"><input id="radio-itemlight-button" type="radio" class="radio-button" name="color-scheme"><label for="radio-itemlight-button" class="light-button" data-l10n-id="about-reader-color-scheme-light" title="Color Scheme Light">Light</label><input id="radio-itemdark-button" type="radio" class="radio-button" name="color-scheme"><label for="radio-itemdark-button" class="dark-button" data-l10n-id="about-reader-color-scheme-dark" title="Color Scheme Dark">Dark</label><input id="radio-itemsepia-button" type="radio" class="radio-button" name="color-scheme"><label for="radio-itemsepia-button" class="sepia-button" data-l10n-id="about-reader-color-scheme-sepia" title="Color Scheme Sepia">Sepia</label><input id="radio-itemauto-button" type="radio" class="radio-button" name="color-scheme" checked="checked"><label for="radio-itemauto-button" class="auto-button" data-l10n-id="about-reader-color-scheme-auto" checked="true" title="Color Scheme Auto">Auto</label></div>
+          </li>
+        </ul>
+      <ul class="dropdown narrate-dropdown"><li><button class="dropdown-toggle toolbar-button narrate-toggle" data-telemetry-id="reader-listen" aria-label="Listen (N)" hidden=""><span class="hover-label">Listen (N)</span></button></li><li class="dropdown-popup"><div class="narrate-row narrate-control"><button class="narrate-skip-previous" disabled="disabled" title="Back"></button><button class="narrate-start-stop" title="Start (N)"></button><button class="narrate-skip-next" disabled="disabled" title="Forward"></button></div><div class="narrate-row narrate-rate"><input class="narrate-rate-input" value="0" step="5" max="100" min="-100" type="range" title="Speed"></div><div class="narrate-row narrate-voices"><div class="voiceselect voice-select"><button class="select-toggle" aria-controls="voice-options">
+      <span class="label">Voice:</span> <span class="current-voice"></span>
+    </button>
+    <div class="options" id="voice-options" role="listbox" style="max-height: 810px;"></div></div></div><div class="dropdown-arrow"></div></li></ul><button data-buttonid="pocket-button" data-telemetry-id="reader-save-to-pocket" class="toolbar-button pocket-button" aria-labelledby="label-pocket-button" style="background-image: url(&quot;chrome://global/skin/icons/pocket.svg&quot;);"><span class="hover-label" id="label-pocket-button" data-l10n-id="about-reader-toolbar-savetopocket">Save To Pocket</span></button></div>
+    </div>
+  </div>
+
+  <div class="container" style="--line-height: 1.6em;" dir="ltr" lang="en-us">
+    <div class="header reader-header reader-show-element">
+      <a class="domain reader-domain" href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/">geeksforgeeks.org</a>
+      <div class="domain-border"></div>
+      <h1 class="reader-title">Fast Doubling method to find the Nth Fibonacci number</h1>
+      <div class="credits reader-credits">unagi@unagi</div>
+      <div class="meta-data">
+        <div class="reader-estimated-time" data-l10n-id="about-reader-estimated-read-time" data-l10n-args="{&quot;range&quot;:&quot;3–4&quot;,&quot;rangePlural&quot;:&quot;other&quot;}" dir="ltr">3–4 minutes</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="content">
+      <div class="moz-reader-content reader-show-element"><div id="readability-page-1" class="page"><div><p>Given an integer <strong>N</strong>, the task is to find the N-th <a href="https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/">Fibonacci numbers</a>.<br><strong>Examples:</strong>&nbsp;<br>&nbsp;</p><blockquote><p><strong>Input:</strong> N = 3&nbsp;<br><strong>Output:</strong> 2&nbsp;<br><strong>Explanation:</strong>&nbsp;<br>F(1) = 1, F(2) = 1&nbsp;<br>F(3) = F(1) + F(2) = 2&nbsp;<br><strong>Input:</strong> N = 6&nbsp;<br><strong>Output:</strong> 8&nbsp;<br>&nbsp;</p></blockquote><p><strong>Approach:</strong>&nbsp;<br>&nbsp;</p><ul><li>The <a href="http://www.geeksforgeeks.org/matrix-exponentiation/">Matrix Exponentiation</a>
+ Method is already discussed before. The Doubling Method can be seen as 
+an improvement to the matrix exponentiation method to find the N-th 
+Fibonacci number although it doesn’t use matrix multiplication itself.<br>&nbsp;</li><li>The Fibonacci recursive sequence is given by&nbsp;<br>&nbsp;</li></ul><pre><strong>F(n+1) = F(n) + F(n-1)</strong></pre><ul><li>The Matrix Exponentiation method uses the following formula<p><span>&nbsp; </span><span>&nbsp; </span><img src="Fast%20Doubling%20method%20to%20find%20the%20Nth%20Fibonacci%20number%20-%20GeeksforGeeks_files/quicklatex.com-3ad76f628a08999f9eea7b1e3b05a808_l3.svg" alt="\[ \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^n = \begin{bmatrix} F_{n+1} &amp; F_n \\ F_n &amp; F_{n-1} \end{bmatrix} \]                   " title="Rendered by QuickLaTeX.com" width="281" height="65"></p></li><li>The method involves costly matrix multiplication and moreover F<sub>n</sub> is redundantly computed twice.<br>On the other hand, Fast Doubling Method is based on two basic formulas:&nbsp;<br>&nbsp;</li></ul><pre><strong>F(2n) = F(n)[2F(n+1) – F(n)]</strong>
+<strong>F(2n + 1) = F(n)<sup>2 + F(n+1)2</sup></strong></pre><ul><li>Here is a short explanation of the above results:<br>&nbsp;</li></ul><blockquote><p><strong>Start with:&nbsp;</strong><br>F(n+1) = F(n) + F(n-1) &amp;&nbsp;<br>F(n) = F(n)&nbsp;<br>It can be rewritten in the matrix form as:&nbsp;</p><p><span>&nbsp; </span><span>&nbsp; </span><img src="Fast%20Doubling%20method%20to%20find%20the%20Nth%20Fibonacci%20number%20-%20GeeksforGeeks_files/quicklatex.com-b92a4004a58575fbc3bc0beb291cee62_l3.svg" alt="\[ \begin{bmatrix} F(n+1) \\ F(n) \end{bmatrix} = \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix} \begin{bmatrix} F(n) \\ F(n-1) \end{bmatrix} \] \[\quad\enspace= \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^2 \begin{bmatrix} F(n-1) \\ F(n-2) \end{bmatrix} \] \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\enspace\enspace\thinspace......\\ \[= \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^n \begin{bmatrix} F(1) \\ F(0) \end{bmatrix} \]                   " title="Rendered by QuickLaTeX.com" width="367" height="276"></p><p>For doubling, we just plug in “2n” into the formula:</p><p><span>&nbsp; </span><span>&nbsp; </span><img src="Fast%20Doubling%20method%20to%20find%20the%20Nth%20Fibonacci%20number%20-%20GeeksforGeeks_files/quicklatex.com-9f467b43ac7801455d97b08547f2e884_l3.svg" alt="\[ \begin{bmatrix} F(2n+1) \\ F(2n) \end{bmatrix} = \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^{2n} \begin{bmatrix} F(1) \\ F(0) \end{bmatrix} \] \[\quad\enspace= \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^n \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}^n \begin{bmatrix} F(1) \\ F(0) \end{bmatrix} \] \[\quad\enspace= \begin{bmatrix} F(n+1) &amp; F(n) \\ F(n) &amp; F(n-1) \end{bmatrix} \begin{bmatrix} F(n+1) &amp; F(n) \\ F(n) &amp; F(n-1) \end{bmatrix} \begin{bmatrix} F(1) \\ F(0) \end{bmatrix} \] \[\quad\enspace= \begin{bmatrix} F(n+1)^2 + F(n)^2 \\ F(n)F(n+1) + F(n)F(n-1) \end{bmatrix} \]                   " title="Rendered by QuickLaTeX.com" width="625" height="321"></p><p>Substituting F(n-1) = F(n+1)- F(n) and after simplification we get,&nbsp;</p><p><span>&nbsp; </span><span>&nbsp; </span><img src="Fast%20Doubling%20method%20to%20find%20the%20Nth%20Fibonacci%20number%20-%20GeeksforGeeks_files/quicklatex.com-57254b1bbbf85811b289c18d4877650a_l3.svg" alt="\[ \begin{bmatrix} F(2n+1) \\ F(2n) \end{bmatrix} = \begin{bmatrix} F(n+1)^2 + F(n)^2 \\ 2F(n+1)F(n) - F(n)^2 \end{bmatrix} \]                   " title="Rendered by QuickLaTeX.com" width="467" height="64"></p></blockquote><p>Below is the implementation of the above approach:<br>&nbsp;</p><div><ul role="tablist"><li id="tablist1-tab1" aria-controls="tablist1-panel1" role="tab" tabindex="0">C++</li><li id="tablist1-tab2" aria-controls="tablist1-panel2" role="tab" tabindex="0">Java</li><li id="tablist1-tab3" aria-controls="tablist1-panel3" role="tab" tabindex="0">Python3</li><li id="tablist1-tab4" aria-controls="tablist1-panel4" role="tab" tabindex="0">C#</li><li id="tablist1-tab5" aria-controls="tablist1-panel5" role="tab" tabindex="0">Javascript</li></ul><h2 tabindex="0">C++</h2><h2 tabindex="0">Java</h2><h2 tabindex="0">Python3</h2><h2 tabindex="0">C#</h2><h2 tabindex="0">Javascript</h2></div><p><strong>Time Complexity: </strong>Repeated squaring reduces time from linear to logarithmic . Hence, with constant time arithmetic, the time complexity is <strong>O(log n)</strong>.<br><strong>Auxiliary Space: </strong>O(n).</p><p><strong>Iterative Version</strong></p><p>We can implement iterative version of above method, by initializing array with two elements <strong>f</strong> = [F(0), F(1)] = [0, 1] and iteratively constructing F(n), on every step we will transform <strong>f</strong> into <strong>[F(2i), F(2i+1)] </strong>or<strong> [F(2i+1), F(2i+2)]</strong> , where <strong>i</strong> corresponds to the current value of <strong>i</strong> stored in <strong>f</strong> = [F(i), F(i+1)].</p><p><strong>Approach:</strong></p><ul><li>Create array with two elements <strong>f</strong> = [0, 1] , which represents [F(0), F(1)] .</li><li>For finding F(n), iterate over binary representation of <strong>n</strong> from left to right, let k<sup>th</sup> bit from left be b<sub>k </sub>.</li><li>Iteratively apply the below steps for all bits in <strong>n </strong>.</li><li>Using b<sub>k</sub> we will decide whether to transform <strong>f = [F(i), F(i+1)]</strong> into <strong>[F(2i), F(2i+1)]</strong> or <strong>[F(2i+1), F(2i+2)] </strong>.</li></ul><pre><strong>if b<sub>k == 0:</sub></strong>
+<strong> f = [F(2i), F(2i+1)] = [F(i){2F(i+1)-F(i)}, F(i+1)<sup>2+F(i)2]</sup></strong>
+<strong>if b<sub>k == 1:</sub></strong>
+<strong> f = [F(2i+1), F(2i+2)] = [F(i+1)<sup>2+F(i)2, F(i+1){2F(i)+F(i+1)}]</sup></strong>
+
+<strong>where,</strong>
+<strong>F(i) and F(i+1) are current values stored in f.</strong></pre><ul><li>return <strong>f[0] </strong>.</li></ul><pre><strong>Example:</strong>
+<strong>for n = 13 = (1101)<sub>2</sub></strong>
+<strong>b =          1               1               0               1</strong>
+<strong>[F(0), F(1)] -&gt; [F(1), F(2)] -&gt; [F(3), F(4)] -&gt; [F(6), F(7)] -&gt; [F(13), F(14)]</strong>
+<strong>[0, 1]       -&gt; [1, 1]       -&gt; [2, 3]       -&gt; [8, 13]      -&gt; [233, 377]</strong></pre><p>Below is the implementation of the above approach:</p><div><ul role="tablist"><li id="tablist2-tab1" aria-controls="tablist2-panel1" role="tab" tabindex="0">C++</li><li id="tablist2-tab2" aria-controls="tablist2-panel2" role="tab" tabindex="0">Java</li><li id="tablist2-tab3" aria-controls="tablist2-panel3" role="tab" tabindex="0">Python3</li><li id="tablist2-tab4" aria-controls="tablist2-panel4" role="tab" tabindex="0">C#</li><li id="tablist2-tab5" aria-controls="tablist2-panel5" role="tab" tabindex="0">Javascript</li></ul><h2 tabindex="0">C++</h2><h2 tabindex="0">Java</h2><h2 tabindex="0">Python3</h2><h2 tabindex="0">C#</h2><h2 tabindex="0">Javascript</h2></div><p><strong>Time Complexity</strong>:
+ We are iterating over the binary string of number n which has length of
+ log(n) and doing constant time arithmetic operations, so the time 
+complexity is <strong>O(log n)</strong>.</p><p><strong>Auxiliary Space</strong>: We are storing two elements in f and binary string of n has length log(n), so space complexity is <strong>O(log n)</strong>.</p><br></div></div></div>
+    </div>
+
+    <div>
+      <div class="reader-message"></div>
+    </div>
+    <div aria-owns="toolbar"></div>
+  </div>
+
+  <div id="pocket-cta-container" hidden="">
+    <div class="pocket-cta-inner" id="pocket-cta-only">
+      <div class="pocket-cta">
+        <header class="pocket-cta-header">Save anything from across the web in Pocket, your personal library.</header>
+        <p class="pocket-cta-subhead">As part of the Firefox family, 
+Pocket provides a quiet, calm space that’s perfect for reading. It 
+strips away all the distractions of the internet so you can really 
+focus.</p>
+        <a href="https://getpocket.com/signup?utm_source=firefox_reader&amp;utm_medium=variant_cta_only" class="pocket-btn pocket-sign-up"><strong>Sign up</strong> - it’s free</a>
+        <a href="https://getpocket.com/explore?utm_source=firefox_reader&amp;utm_medium=variant_cta_only" class="pocket-btn pocket-discover-more"><strong>Discover more</strong></a>
+      </div>
+      <button class="pocket-dismiss-cta" title="Dismiss"></button>
+    </div>
+
+    <div class="pocket-cta-inner" id="pocket-cta-and-recs">
+      <div class="pocket-recs-top">
+        <div class="col">
+          <header class="pocket-cta-header">Discover the most thought-provoking stories out there, curated by Pocket.</header>
+          <p class="pocket-cta-subhead">As part of the Firefox family, 
+Pocket surfaces the best articles out there—new perspectives, intriguing
+ deep-dives, timeless classics—and we do this with the same dedication 
+to privacy you’ve come to expect from Firefox and Mozilla. </p>
+        </div>
+        <div class="col">
+          <button class="pocket-collapse-recs"></button>
+        </div>
+      </div>
+
+      <div class="pocket-recs"></div>
+
+      <div class="pocket-sign-up-wrapper">
+        <a href="https://getpocket.com/explore?utm_source=firefox_reader&amp;utm_medium=variant_cta_plus_recs" class="pocket-btn pocket-sign-up"><strong>Discover more</strong></a>
+      </div>
+    </div>
+  </div>
+
+
+
+</body></html>

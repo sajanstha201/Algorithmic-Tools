@@ -25,7 +25,12 @@ def loot(a):
                           if(table[k][j-a[i]]==1):
                             table[i][j]=1
                             continue
-        if(table[l-1][q]==0):
+        c=0
+        for i in range(l-1):
+            if(table[i][q]==1):
+                c=1
+                break
+        if(c==0):
             return 0
         else:
             sum=q
@@ -41,27 +46,27 @@ def loot(a):
                         l=l-1
                         break
                     i=i+1
-        l=len(a)
-        for i in range(l):
-              for j in range(q+1):
-                    if(j<a[i]):
-                        table[i][j]=0
-                    elif(j==a[i]):
-                        table[i][j]=1
-                    else:
-                        table[i][j]=0   
-             
-        for i in range(1,l):
-              for j in range(q+1):
-                  if(a[i]<j):
-                      for k in range(0,l):
-                          if(table[k][j-a[i]]==1):
+            l=len(a)
+            for i in range(l):
+                for j in range(q+1):
+                        if(j<a[i]):
+                            table[i][j]=0
+                        elif(j==a[i]):
                             table[i][j]=1
-                            continue
-        if(table[l-1][q]==1):
-            return 1
-        else:
-            return 0
+                        else:
+                            table[i][j]=0   
+                
+            for i in range(1,l):
+                for j in range(q+1):
+                    if(a[i]<j):
+                        for k in range(0,l):
+                            if(table[k][j-a[i]]==1):
+                                table[i][j]=1
+                                continue
+            if(table[l-1][q]==1):
+                return 1
+            else:
+                return 0
 if __name__=='__main__':
     list_input=list()
     _=input()
