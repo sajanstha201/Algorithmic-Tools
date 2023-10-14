@@ -6,7 +6,6 @@ if __name__ =="__main__":
     c=0
     s=time.time()
     while(n!=c):
-        # print(i)
         temp=j
         j=j+i
         i=temp

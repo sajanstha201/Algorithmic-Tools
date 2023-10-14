@@ -41,7 +41,7 @@ def get_maximum_value(operands, operators):
         for i in range(0, n-s):
             j = i + s
             m[i][j], M[i][j] = MinAndMax(M, m, i, j, operators)
-    print(M,m)
+
     return M[0][n-1]
 
 

@@ -8,20 +8,21 @@ def mergesort(a,b):
         return b
     elif(l_b==0):
         return a
-    while(1):       
-        if(a[0]<=b[0]):
-            c.append(a[0])
-            a.remove(a[0])
-            if(int(len(a))==0):
-                c.append(b)
-                break
-        elif(a[0]>b[0]):
-            c.append(b[0])
-            b.remove(b[0])
-            k=k+int(len(a))
-            if(int(len(b))==0):
-                c.append(a)
-                break
+    else:
+        while(1):       
+            if(a[0]<=b[0]):
+                c.append(a[0])
+                a.remove(a[0])
+                if(int(len(a))==0):
+                    c=c+b
+                    break
+            elif(a[0]>b[0]):
+                c.append(b[0])
+                b.remove(b[0])
+                k=k+int(len(a))
+                if(int(len(b))==0):
+                    c=c+a
+                    break
     return c
 def inversions_naive(a):
     global k
@@ -31,9 +32,9 @@ def inversions_naive(a):
             k=k+1
             return [a[1],a[0]]
         else:
-            return a
+            return (a)
     elif(l==1):
-        return a
+        return (a)
     elif(l==0):
         return []
     x=[]
